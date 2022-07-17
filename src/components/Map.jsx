@@ -7,6 +7,11 @@ import {
   Polyline,
   Circle,
 } from 'react-leaflet';
+import { Share } from 'phosphor-react';
+
+const blueOptions = { color: 'blue' };
+const fillGreenOptions = { color: 'green', fillColor: 'green' };
+const fillRedOptions = { color: 'red', fillColor: 'red' };
 
 const Map = ({ fastestPath }) => {
   const [polyline, setPolyline] = useState([]);
@@ -19,13 +24,22 @@ const Map = ({ fastestPath }) => {
     setPolyline(newPolyline);
   }, [fastestPath]);
 
-  const limeOptions = { color: 'blue' };
-  const fillGreenOptions = { color: 'green', fillColor: 'green' };
-  const fillRedOptions = { color: 'red', fillColor: 'red' };
-
   return (
     <div className="relative h-full w-2/3 z-0 overflow-hidden">
-      <div className="absolute top-0 right-0 h-16 w-16 bg-red-800 !z-50"></div>
+      {fastestPath.length !== 0 && (
+        <div
+          className="absolute bottom-8 right-8 h-20 w-20 flex justify-center items-center bg-red-700 !z-50 rounded-full hover:cursor-pointer"
+          onClick={() => {
+            let link = 'https://www.google.com/maps/dir/';
+            fastestPath.forEach((stop, i) => {
+              link += stop.label.replace(' ', '+') + '/';
+            });
+            window.open(link, '_blank');
+          }}
+        >
+          <Share size={44} color="#fff" weight="bold" />
+        </div>
+      )}
       <MapContainer
         className="h-full w-full z-20"
         center={[
@@ -70,7 +84,7 @@ const Map = ({ fastestPath }) => {
             </div>
           );
         })}
-        <Polyline pathOptions={limeOptions} positions={polyline} />
+        <Polyline pathOptions={blueOptions} positions={polyline} />
       </MapContainer>
     </div>
   );
