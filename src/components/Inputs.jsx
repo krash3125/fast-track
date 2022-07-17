@@ -1,11 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import {
   Title,
   Input,
   Divider,
   Button,
   Badge,
-  Notification,
   LoadingOverlay,
 } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
@@ -15,23 +14,15 @@ const axios = a.default;
 
 import getDistance from 'geolib/es/getDistance';
 
-const Inputs = ({ fastestPath, setFastestPath }) => {
-  const [stopsInput, setStopsInput] = useState([
-    '4345 Hilton Avenue San Jose CA USA',
-    '1640 Clarkspur San Jose CA 95129 USA',
-    '7068 Phyllis Avenue San Jose CA 95129 United States',
-  ]);
+const Inputs = ({ setFastestPath }) => {
+  const [stopsInput, setStopsInput] = useState(['']);
   const [stopsLatLong, setStopsLatLong] = useState([]);
 
-  const [startInput, setStartInput] = useState(
-    '1434 Pine Grove Way San Jose California 95129 United States'
-  );
-  const [endInput, setEndInput] = useState(
-    '6501 Hanover Drive San Jose CA 95129 United States'
-  );
+  const [startInput, setStartInput] = useState('');
+  const [endInput, setEndInput] = useState('');
+
   const [startLatLong, setStartLatLong] = useState({});
   const [endLatLong, setEndLatLong] = useState({});
-
   const [loading, setLoading] = useState(false);
 
   const handleChange = (i, e) => {
