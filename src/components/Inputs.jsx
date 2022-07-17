@@ -15,7 +15,7 @@ const axios = a.default;
 
 import getDistance from 'geolib/es/getDistance';
 
-const Inputs = () => {
+const Inputs = ({ fastestPath, setFastestPath }) => {
   const [stopsInput, setStopsInput] = useState([
     '4345 Hilton Avenue San Jose CA USA',
     '1640 Clarkspur San Jose CA 95129 USA',
@@ -31,8 +31,6 @@ const Inputs = () => {
   );
   const [startLatLong, setStartLatLong] = useState({});
   const [endLatLong, setEndLatLong] = useState({});
-
-  const [fastestPath, setFastestPath] = useState([]);
 
   const [loading, setLoading] = useState(false);
 
@@ -171,7 +169,9 @@ const Inputs = () => {
     setStartLatLong(startingPoint);
     setEndLatLong(endingPoint);
     setStopsLatLong(newStopsLatLong);
+
     setFastestPath([...startingPoint, ...perms[minIndex], ...endingPoint]);
+
     setLoading(false);
   };
 
@@ -233,8 +233,12 @@ const Inputs = () => {
                 message: 'Not all inputs are fill out! 🤥',
                 color: 'red',
               });
-
-              console.log('empty');
+            } else if (stopsInput.length === 0) {
+              showNotification({
+                title: 'Input Error',
+                message: 'No stops included! 🤥',
+                color: 'red',
+              });
             } else {
               setLoading(true);
               calcFastestPath();
