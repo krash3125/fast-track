@@ -27,7 +27,7 @@ We are proud that we were able to create a working application in such a short t
 The next steps for Fast Track would be to get a license for this application and outsource it to more users to get more traffic.
 
 ## Link
-[Live Hosting of Fast Track](https://fast-track-krash3125.vercel.app/)
+[Live Hosting of Fast Track](https://fast-track-ten.vercel.app/)
 
 ## Run Locally
 
