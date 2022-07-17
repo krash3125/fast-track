@@ -63,7 +63,7 @@ const Inputs = () => {
     addresses.forEach((address) => {
       returnData = axios
         .get(
-          `http://api.positionstack.com/v1/forward?access_key=${
+          `https://api.positionstack.com/v1/forward?access_key=${
             import.meta.env.VITE_POSITIONSTACK_API
           }&query=${address.replace(' ', '+')}&limit=1`
         )
