@@ -26,5 +26,31 @@ We are proud that we were able to create a working application in such a short t
 ## What's next for Fast Track
 The next steps for Fast Track would be to get a license for this application and outsource it to more users to get more traffic.
 
-##Link
+## Link
 [Live Hosting of Fast Track](https://fast-track-krash3125.vercel.app/)
+
+## Run Locally
+
+Clone the project
+
+```bash
+  git clone https://github.com/krash3125/fast-track.git
+```
+
+Go to the project directory
+
+```bash
+  cd fast-track
+```
+
+Install dependencies
+
+```bash
+  npm install
+```
+
+Start the  server
+
+```bash
+  npm run dev
+```
