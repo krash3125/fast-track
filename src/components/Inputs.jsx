@@ -176,7 +176,7 @@ const Inputs = () => {
   };
 
   return (
-    <div className="h-full w-1/3 flex flex-col gap-2 border border-solid border-ft-grey p-2">
+    <div className="h-full w-1/3 flex flex-col gap-2 border border-solid border-ft-grey bg-[#F8F9FA] p-2">
       <Title order={4}>Starting Location</Title>
       <Input
         placeholder="Starting Location"
