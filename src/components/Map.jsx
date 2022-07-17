@@ -28,7 +28,7 @@ const Map = ({ fastestPath }) => {
     <div className="relative h-full w-2/3 z-0 overflow-hidden">
       {fastestPath.length !== 0 && (
         <div
-          className="absolute bottom-8 right-8 h-20 w-20 flex justify-center items-center bg-red-700 !z-50 rounded-full hover:cursor-pointer"
+          className="absolute bottom-8 right-8 h-16 w-16 flex justify-center items-center bg-red-700 !z-50 rounded-full hover:cursor-pointer"
           onClick={() => {
             let link = 'https://www.google.com/maps/dir/';
             fastestPath.forEach((stop, i) => {
@@ -37,7 +37,7 @@ const Map = ({ fastestPath }) => {
             window.open(link, '_blank');
           }}
         >
-          <Share size={44} color="#fff" weight="bold" />
+          <Share size={36} color="#fff" weight="bold" />
         </div>
       )}
       <MapContainer

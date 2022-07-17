@@ -34,15 +34,10 @@ const Inputs = ({ fastestPath, setFastestPath }) => {
 
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    console.log(stopsLatLong);
-  }, [stopsLatLong]);
-
   const handleChange = (i, e) => {
     let newStopInputs = [...stopsInput];
     newStopInputs[i] = e.target.value;
     setStopsInput(newStopInputs);
-    console.log(newStopInputs);
   };
 
   const addInput = () => {
@@ -92,8 +87,6 @@ const Inputs = ({ fastestPath, setFastestPath }) => {
     let distance = 0;
 
     for (let i = 0; i < stops.length - 2; i++) {
-      // console.log('stops[i]', stops[i]);
-      // console.log('stops[i+1]', stops[i + 1]);
       distance += getDistance(
         {
           latitude: stops[i].latitude,
@@ -105,7 +98,6 @@ const Inputs = ({ fastestPath, setFastestPath }) => {
         }
       );
     }
-    console.log('distance', distance);
     return distance;
   };
 
@@ -128,7 +120,6 @@ const Inputs = ({ fastestPath, setFastestPath }) => {
 
   const calcFastestPath = async () => {
     const allStopsData = await loadStopsData();
-    // console.log('allstopsdata', allStopsData);
 
     const startingPoint = allStopsData[0];
     const endingPoint = allStopsData[allStopsData.length - 1];
@@ -138,19 +129,15 @@ const Inputs = ({ fastestPath, setFastestPath }) => {
     newStopsLatLong.splice(newStopsLatLong.length - 1, newStopsLatLong.length);
     newStopsLatLong = newStopsLatLong[0];
 
-    console.log('--------------------------------');
-    console.log('starting data', startingPoint);
-    console.log('middle data', newStopsLatLong);
-    console.log('ending data', endingPoint);
-    console.log('--------------------------------');
+    // console.log('--------------------------------');
+    // console.log('starting data', startingPoint);
+    // console.log('middle data', newStopsLatLong);
+    // console.log('ending data', endingPoint);
+    // console.log('--------------------------------');
 
     permutator(newStopsLatLong);
 
     const perms = permutator(newStopsLatLong);
-    console.log('perms', perms);
-
-    // console.log(
-    //   );
     let distancesArr = [];
 
     perms.forEach((perm) => {
@@ -160,11 +147,6 @@ const Inputs = ({ fastestPath, setFastestPath }) => {
     });
     const min = Math.min(...distancesArr);
     const minIndex = distancesArr.indexOf(min);
-    console.log(distancesArr);
-    console.log(min);
-    console.log(minIndex);
-    console.log(perms[minIndex]);
-    console.log([...startingPoint, ...perms[minIndex], ...endingPoint]);
 
     setStartLatLong(startingPoint);
     setEndLatLong(endingPoint);
@@ -176,7 +158,7 @@ const Inputs = ({ fastestPath, setFastestPath }) => {
   };
 
   return (
-    <div className="h-full w-1/3 flex flex-col gap-2 border border-solid border-ft-grey bg-[#F8F9FA] p-2">
+    <div className="h-full w-1/3 flex flex-col gap-2 border border-solid border-ft-grey bg-[#F8F9FA] p-2 overflow-y-auto">
       <Title order={4}>Starting Location</Title>
       <Input
         placeholder="Starting Location"
@@ -192,7 +174,7 @@ const Inputs = ({ fastestPath, setFastestPath }) => {
 
       <Divider my="xs" label="STOPS" labelPosition="center" />
 
-      <div className="h-full flex flex-col gap-2 overflow-y-auto">
+      <div className="h-full flex flex-col gap-2">
         {stopsInput.map((value, i) => (
           <Input
             key={i}
@@ -254,27 +236,3 @@ const Inputs = ({ fastestPath, setFastestPath }) => {
 };
 
 export default Inputs;
-
-{
-  /* <Notification color="red" title="We notify you that">
-        You are now obligated to give a star to Mantine project on GitHub
-      </Notification> 
-      
-      
-      ,
-                styles: (theme) => ({
-                  root: {
-                    backgroundColor: theme.colors.red[6],
-                    borderColor: theme.colors.red[6],
-
-                    '&::before': { backgroundColor: theme.white },
-                  },
-                  title: { color: theme.white },
-                  description: { color: theme.white },
-                  closeButton: {
-                    color: theme.white,
-                    '&:hover': { backgroundColor: theme.colors.red[7] },
-                  },
-                }),
-      */
-}

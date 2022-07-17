@@ -12,7 +12,7 @@ const App = () => {
     <NotificationsProvider>
       <div className="h-screen w-screen flex flex-col">
         <Header />
-        <div className="h-full flex flex-row">
+        <div className="h-full flex flex-row overflow-y-hidden">
           <Inputs fastestPath={fastestPath} setFastestPath={setFastestPath} />
           <Map fastestPath={fastestPath} />
         </div>
