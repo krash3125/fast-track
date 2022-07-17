@@ -1,5 +1,5 @@
-# SleepyHeads
-<img src = "./src/assets/logo.png" width="200"> </img>
+# Fast Track
+<img src = "./src/assets/logo_with_title.png" width="200"> </img>
 
 ## Inspiration
 The current state of the world has left gas prices at an all time high and it is more important that ever to be fuel efficiency. Whether it be for delivery services, or personal use saving fuel is just as imporant. In an effort to help increase fuel efficiency, lower costs, and help the enviornment we created Fast Track.
