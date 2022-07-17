@@ -2,7 +2,7 @@
 <img src = "./src/assets/logo_with_title.png" width="200"> </img>
 
 ## Inspiration
-The current state of the world has left gas prices at an all time high and it is more important that ever to be fuel efficiency. Whether it be for delivery services, or personal use saving fuel is just as important. In an effort to help increase fuel efficiency, lower costs, and help the environment we created Fast Track.
+The current state of the world has left gas prices at an all time high and it is more important than ever to be fuel efficient. Whether it be for delivery services, or personal use saving fuel is just as important. In an effort to help increase fuel efficiency, lower costs, and help the environment we created Fast Track.
 
 ## What it does
 Taking user inputed destinations, Fast Track calculates the most efficient and optimized route you can take, as well as providing directions for the user to get there. In doing so we are able to minimize costs, shorten delivery times, and maximize fuel efficiency.
@@ -12,7 +12,7 @@ Our application, Fast Track takes locations from users and calculates the shorte
 
 ## Challenges we ran into
 * Working with the Leaflet API was a struggle due to the lack of customization and the lack of detail in the developer documentation.
-* Position Stoack API led to a Mixed Content URL error which was difficult to resolve.
+* Position Stack API led to a Mixed Content URL error which was difficult to resolve.
 * The Algorithm Implementation was difficult due to the complexity and variety of algorithms online.
 
 ## Accomplishments that we're proud of
