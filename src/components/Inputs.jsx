@@ -77,7 +77,7 @@ const Inputs = ({ setFastestPath }) => {
   const getTotalDistance = (stops) => {
     let distance = 0;
 
-    for (let i = 0; i < stops.length - 2; i++) {
+    for (let i = 0; i < stops.length - 1; i++) {
       distance += getDistance(
         {
           latitude: stops[i].latitude,
