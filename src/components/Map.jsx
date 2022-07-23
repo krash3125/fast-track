@@ -19,7 +19,7 @@ const Map = ({ fastestPath }) => {
   useEffect(() => {
     let newPolyline = [];
     fastestPath.forEach((stop) => {
-      newPolyline.push([stop.latitude, stop.longitude]);
+      newPolyline.push([stop.position.lat, stop.position.lon]);
     });
     setPolyline(newPolyline);
   }, [fastestPath]);
@@ -32,7 +32,7 @@ const Map = ({ fastestPath }) => {
           onClick={() => {
             let link = 'https://www.google.com/maps/dir/';
             fastestPath.forEach((stop, i) => {
-              link += stop.label.replace(' ', '+') + '/';
+              link += stop.address.freeformAddress.replace(' ', '+') + '/';
             });
             window.open(link, '_blank');
           }}
@@ -58,7 +58,7 @@ const Map = ({ fastestPath }) => {
             <div key={index}>
               {index === 0 ? (
                 <Circle
-                  center={[marker.latitude, marker.longitude]}
+                  center={[marker.position.lat, marker.position.lon]}
                   pathOptions={fillGreenOptions}
                   radius={100}
                 />
@@ -67,7 +67,7 @@ const Map = ({ fastestPath }) => {
               )}
               {index === fastestPath.length - 1 ? (
                 <Circle
-                  center={[marker.latitude, marker.longitude]}
+                  center={[marker.position.lat, marker.position.lon]}
                   pathOptions={fillRedOptions}
                   radius={100}
                 />
@@ -77,9 +77,9 @@ const Map = ({ fastestPath }) => {
 
               <Marker
                 styles={{ backgroundColor: 'red' }}
-                position={[marker.latitude, marker.longitude]}
+                position={[marker.position.lat, marker.position.lon]}
               >
-                <Popup>{marker.label}</Popup>
+                <Popup>{marker.address.freeformAddress}</Popup>
               </Marker>
             </div>
           );

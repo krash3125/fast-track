@@ -47,12 +47,13 @@ const Inputs = ({ setFastestPath }) => {
     addresses.forEach((address) => {
       returnData = axios
         .get(
-          `https://api.positionstack.com/v1/forward?access_key=${
-            import.meta.env.VITE_POSITIONSTACK_API
-          }&query=${address.replace(' ', '+')}&limit=1`
+          `https://api.tomtom.com/search/2/geocode/${address.replace(
+            ' ',
+            '+'
+          )}.json?key=${import.meta.env.VITE_TOMTOM_API}&limit=1`
         )
         .then((res) => {
-          tempData.push(res.data.data[0]);
+          tempData.push(res.data.results[0]);
         })
         .catch((err) => console.error(err))
         .then(() => {
@@ -76,16 +77,15 @@ const Inputs = ({ setFastestPath }) => {
 
   const getTotalDistance = (stops) => {
     let distance = 0;
-
     for (let i = 0; i < stops.length - 1; i++) {
       distance += getDistance(
         {
-          latitude: stops[i].latitude,
-          longitude: stops[i].longitude,
+          latitude: stops[i].position.lat,
+          longitude: stops[i].position.lon,
         },
         {
-          latitude: stops[i + 1].latitude,
-          longitude: stops[i + 1].longitude,
+          latitude: stops[i + 1].position.lat,
+          longitude: stops[i + 1].position.lon,
         }
       );
     }
@@ -119,12 +119,6 @@ const Inputs = ({ setFastestPath }) => {
     newStopsLatLong.splice(0, 1);
     newStopsLatLong.splice(newStopsLatLong.length - 1, newStopsLatLong.length);
     newStopsLatLong = newStopsLatLong[0];
-
-    // console.log('--------------------------------');
-    // console.log('starting data', startingPoint);
-    // console.log('middle data', newStopsLatLong);
-    // console.log('ending data', endingPoint);
-    // console.log('--------------------------------');
 
     permutator(newStopsLatLong);
 
