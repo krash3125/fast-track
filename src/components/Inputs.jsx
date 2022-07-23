@@ -44,40 +44,50 @@ const Inputs = ({ setFastestPath }) => {
   const addressToLatLong = async (addresses) => {
     let tempData = [];
     let returnData = [];
-    addresses.forEach((address) => {
-      returnData = axios
-        .get(
-          `https://api.tomtom.com/search/2/geocode/${address.replace(
-            ' ',
-            '+'
-          )}.json?key=${import.meta.env.VITE_TOMTOM_API}&limit=1`
-        )
-        .then((res) => {
-          tempData.push(res.data.results[0]);
-        })
-        .catch((err) => {
-          showNotification({
-            title: 'API Error',
-            message: 'Please try again later. 🤥',
-            color: 'red',
-          });
-        })
-        .then(() => {
-          return tempData;
-        });
-    });
+
+    for (let i = 0; i < addresses.length; i++) {
+      returnData = new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve(
+            axios
+              .get(
+                `https://api.tomtom.com/search/2/geocode/${addresses[i].replace(
+                  ' ',
+                  '+'
+                )}.json?key=${import.meta.env.VITE_TOMTOM_API}&limit=1`
+              )
+              .then((res) => {
+                tempData.push(res.data.results[0]);
+              })
+              .catch((err) => {
+                showNotification({
+                  title: 'API Error',
+                  message: 'Please try again later. 🤥',
+                  color: 'red',
+                });
+              })
+              .then(() => {
+                return tempData;
+              })
+          );
+        }, 200 * i);
+      });
+    }
+
     return returnData;
   };
 
   const loadStopsData = async () => {
     setStopsLatLong([]);
-    let startAddress = [startInput];
-    let endAddress = [endInput];
-    let stopsAdresses = [...stopsInput];
+    const latLongData = await addressToLatLong([
+      startInput,
+      ...stopsInput,
+      endInput,
+    ]);
     return [
-      await addressToLatLong(startAddress),
-      await addressToLatLong(stopsAdresses),
-      await addressToLatLong(endAddress),
+      [latLongData[0]],
+      latLongData.splice(1, latLongData.length - 2),
+      [latLongData[latLongData.length - 1]],
     ];
   };
 
@@ -117,6 +127,8 @@ const Inputs = ({ setFastestPath }) => {
 
   const calcFastestPath = async () => {
     const allStopsData = await loadStopsData();
+
+    console.log(allStopsData);
 
     const startingPoint = allStopsData[0];
     const endingPoint = allStopsData[allStopsData.length - 1];
