@@ -127,9 +127,6 @@ const Inputs = ({ setFastestPath }) => {
 
   const calcFastestPath = async () => {
     const allStopsData = await loadStopsData();
-
-    console.log(allStopsData);
-
     const startingPoint = allStopsData[0];
     const endingPoint = allStopsData[allStopsData.length - 1];
 
