@@ -1,4 +1,5 @@
 TODO
 -auto complete input
 -USE ALGORITHM isnt of brute force 
+-map center on call - https://stackoverflow.com/questions/42647735/leaflet-map-container-not-found
 -rate limit api - 5 calls per second (DONE)
