@@ -174,7 +174,7 @@ const Inputs = ({ setFastestPath }) => {
 
       <Divider my="xs" label="STOPS" labelPosition="center" />
 
-      <div className="h-full flex flex-col gap-2">
+      <div className="h-full flex flex-col gap-2 overflow-y-auto">
         {stopsInput.map((value, i) => (
           <Input
             key={i}
@@ -194,9 +194,11 @@ const Inputs = ({ setFastestPath }) => {
             }
           />
         ))}
-        <Button fullWidth onClick={addInput}>
-          Add More
-        </Button>
+        <div className="h-fit">
+          <Button fullWidth onClick={addInput}>
+            Add More
+          </Button>
+        </div>
       </div>
       <div className="h-fit">
         <Divider my="xs" />
