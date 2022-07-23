@@ -55,7 +55,13 @@ const Inputs = ({ setFastestPath }) => {
         .then((res) => {
           tempData.push(res.data.results[0]);
         })
-        .catch((err) => console.error(err))
+        .catch((err) => {
+          showNotification({
+            title: 'API Error',
+            message: 'Please try again later. 🤥',
+            color: 'red',
+          });
+        })
         .then(() => {
           return tempData;
         });
