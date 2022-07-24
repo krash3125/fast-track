@@ -1,11 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Title,
-  Input,
   Divider,
   Button,
   Badge,
   LoadingOverlay,
+  Autocomplete,
 } from '@mantine/core';
 import { showNotification } from '@mantine/notifications';
 
@@ -15,11 +15,11 @@ const axios = a.default;
 import getDistance from 'geolib/es/getDistance';
 
 const Inputs = ({ setFastestPath }) => {
-  const [stopsInput, setStopsInput] = useState(['']);
-  const [stopsLatLong, setStopsLatLong] = useState([]);
-
   const [startInput, setStartInput] = useState('');
   const [endInput, setEndInput] = useState('');
+
+  const [stopsInput, setStopsInput] = useState(['']);
+  const [stopsLatLong, setStopsLatLong] = useState([]);
 
   const [startLatLong, setStartLatLong] = useState({});
   const [endLatLong, setEndLatLong] = useState({});
@@ -27,7 +27,7 @@ const Inputs = ({ setFastestPath }) => {
 
   const handleChange = (i, e) => {
     let newStopInputs = [...stopsInput];
-    newStopInputs[i] = e.target.value;
+    newStopInputs[i] = e;
     setStopsInput(newStopInputs);
   };
 
@@ -157,29 +157,99 @@ const Inputs = ({ setFastestPath }) => {
     setLoading(false);
   };
 
+  const autocompleteDataFetch = async (address) => {
+    return axios
+      .get(
+        `https://api.geocodify.com/v2/autocomplete%20?api_key=${
+          import.meta.env.VITE_GEOCODIFY_API
+        }&q=${address.replace(' ', '+')}`
+      )
+      .then((res) => {
+        return [
+          ...new Set(
+            res.data.response.features.map((res) => res.properties.label)
+          ),
+        ];
+      })
+      .catch((err) => {
+        showNotification({
+          title: 'Autocomplete API Error',
+          message: 'Sorry for the inconvenience! 🤥',
+          color: 'red',
+        });
+        return [];
+      });
+  };
+
+  const [data, setData] = useState([]);
+  const [timer, setTimer] = useState(null);
+
+  useEffect(() => {
+    if (startInput.length > 3) {
+      const timeOutId = setTimeout(async () => {
+        setData(await autocompleteDataFetch(startInput));
+      }, 500);
+      return () => clearTimeout(timeOutId);
+    }
+  }, [startInput]);
+
+  useEffect(() => {
+    if (endInput.length > 3) {
+      const timeOutId = setTimeout(async () => {
+        setData(await autocompleteDataFetch(endInput));
+      }, 500);
+      return () => clearTimeout(timeOutId);
+    }
+  }, [endInput]);
+
   return (
     <div className="h-full w-1/3 flex flex-col gap-2 border border-solid border-ft-grey bg-[#F8F9FA] p-2 overflow-y-auto">
       <Title order={4}>Starting Location</Title>
-      <Input
+      <Autocomplete
         placeholder="Starting Location"
         value={startInput}
-        onChange={(e) => setStartInput(e.target.value)}
+        onChange={setStartInput}
+        data={data}
+        filter={(value, item) => {
+          if (value.length > 3) {
+            return item.value
+              .toLowerCase()
+              .trim()
+              .includes(value.toLowerCase().trim());
+          } else return '';
+        }}
       />
       <Title order={4}>Ending Location</Title>
-      <Input
+      <Autocomplete
         placeholder="Ending Location"
         value={endInput}
-        onChange={(e) => setEndInput(e.target.value)}
+        onChange={setEndInput}
+        data={data}
+        filter={(value, item) => {
+          if (value.length > 3) {
+            return item.value
+              .toLowerCase()
+              .trim()
+              .includes(value.toLowerCase().trim());
+          } else return '';
+        }}
       />
-
       <Divider my="xs" label="STOPS" labelPosition="center" />
-
       <div className="h-full flex flex-col gap-2 overflow-y-auto">
         {stopsInput.map((value, i) => (
-          <Input
+          <Autocomplete
             key={i}
             value={value}
-            onChange={(e) => handleChange(i, e)}
+            onChange={(e) => {
+              handleChange(i, e);
+              if (e.length > 3) {
+                clearTimeout(timer);
+                const newTimer = setTimeout(async () => {
+                  setData(await autocompleteDataFetch(e));
+                }, 500);
+                setTimer(newTimer);
+              }
+            }}
             placeholder="Add a Stop Point"
             rightSectionWidth={50}
             rightSection={
@@ -192,6 +262,15 @@ const Inputs = ({ setFastestPath }) => {
                 x
               </Badge>
             }
+            data={data}
+            filter={(value, item) => {
+              if (value.length > 3) {
+                return item.value
+                  .toLowerCase()
+                  .trim()
+                  .includes(value.toLowerCase().trim());
+              } else return '';
+            }}
           />
         ))}
         <div className="h-fit">
