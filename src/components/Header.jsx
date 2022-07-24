@@ -12,7 +12,6 @@ const Header = () => {
       <Title className="ml-2" order={1}>
         Fast Track
       </Title>
-
       <Popover
         className="ml-auto"
         opened={opened}
