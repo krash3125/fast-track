@@ -31,6 +31,8 @@ The next steps for Fast Track would be to get a license for this application and
 
 ## Run Locally
 
+**Requires TomTom API Key with Search Functionality Enabled**
+
 Clone the project
 
 ```bash
