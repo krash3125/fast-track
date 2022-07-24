@@ -183,23 +183,26 @@ const Inputs = ({ setFastestPath }) => {
 
   const [data, setData] = useState([]);
   const [timer, setTimer] = useState(null);
+  const [settingLoc, setSettingLoc] = useState(false);
 
   useEffect(() => {
-    if (startInput.length > 3) {
+    if (startInput.length > 3 && !settingLoc) {
       const timeOutId = setTimeout(async () => {
         setData(await autocompleteDataFetch(startInput));
       }, 500);
       return () => clearTimeout(timeOutId);
     }
+    setSettingLoc(false);
   }, [startInput]);
 
   useEffect(() => {
-    if (endInput.length > 3) {
+    if (endInput.length > 3 && !settingLoc) {
       const timeOutId = setTimeout(async () => {
         setData(await autocompleteDataFetch(endInput));
       }, 500);
       return () => clearTimeout(timeOutId);
     }
+    setSettingLoc(false);
   }, [endInput]);
 
   return (
@@ -218,6 +221,9 @@ const Inputs = ({ setFastestPath }) => {
               .includes(value.toLowerCase().trim());
           } else return '';
         }}
+        onItemSubmit={() => {
+          setSettingLoc(true);
+        }}
       />
       <Title order={4}>Ending Location</Title>
       <Autocomplete
@@ -233,6 +239,9 @@ const Inputs = ({ setFastestPath }) => {
               .includes(value.toLowerCase().trim());
           } else return '';
         }}
+        onItemSubmit={() => {
+          setSettingLoc(true);
+        }}
       />
       <Divider my="xs" label="STOPS" labelPosition="center" />
       <div className="h-full flex flex-col gap-2 overflow-y-auto">
@@ -242,12 +251,19 @@ const Inputs = ({ setFastestPath }) => {
             value={value}
             onChange={(e) => {
               handleChange(i, e);
+
               if (e.length > 3) {
-                clearTimeout(timer);
-                const newTimer = setTimeout(async () => {
-                  setData(await autocompleteDataFetch(e));
-                }, 500);
-                setTimer(newTimer);
+                if (
+                  e.length - 1 !== value.length &&
+                  e.length - 1 > value.length
+                ) {
+                } else {
+                  clearTimeout(timer);
+                  const newTimer = setTimeout(async () => {
+                    setData(await autocompleteDataFetch(e));
+                  }, 500);
+                  setTimer(newTimer);
+                }
               }
             }}
             placeholder="Add a Stop Point"
