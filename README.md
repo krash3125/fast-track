@@ -30,7 +30,8 @@ The next steps for Fast Track would be to get a license for this application and
 [Live Hosting of Fast Track](https://fast-track-ten.vercel.app/)
 
 ## Run Locally
-~Require TomTom API Key with Search Functionality Enabled~ 
+
+**Requires TomTom API Key with Search Functionality Enabled**
 
 Clone the project
 
