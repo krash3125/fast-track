@@ -79,7 +79,11 @@ const Map = ({ fastestPath }) => {
                 styles={{ backgroundColor: 'red' }}
                 position={[marker.position.lat, marker.position.lon]}
               >
-                <Popup>{marker.address.freeformAddress}</Popup>
+                <Popup>
+                  {marker.type === 'POI'
+                    ? marker.poi.name
+                    : marker.address.freeformAddress}
+                </Popup>
               </Marker>
             </div>
           );
