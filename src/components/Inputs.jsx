@@ -27,7 +27,7 @@ const Inputs = ({ setFastestPath }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    countapi.visits('global');
+    countapi.hit('fasttrack.vercel.app', 'visits');
   }, []);
 
   const handleChange = (i, e) => {
@@ -83,6 +83,11 @@ const Inputs = ({ setFastestPath }) => {
   };
 
   const loadStopsData = async () => {
+    countapi.update(
+      'fasttrack.vercel.app',
+      'addrprocessed',
+      2 + stopsInput.length
+    );
     setStopsLatLong([]);
     const latLongData = await addressToLatLong([
       startInput,
@@ -326,6 +331,7 @@ const Inputs = ({ setFastestPath }) => {
             } else {
               setLoading(true);
               calcFastestPath();
+              countapi.hit('fasttrack.vercel.app', 'routescalc');
             }
           }}
         >
