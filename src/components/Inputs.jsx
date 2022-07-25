@@ -27,7 +27,7 @@ const Inputs = ({ setFastestPath }) => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    countapi.hit('fasttrack.vercel.app', 'visits');
+    countapi.hit('fasttrack.vercel.app', 'webvisits');
   }, []);
 
   const handleChange = (i, e) => {
