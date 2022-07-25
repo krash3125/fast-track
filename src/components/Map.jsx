@@ -37,6 +37,7 @@ const Map = ({ fastestPath }) => {
             window.open(link, '_blank');
           }}
         >
+          <span class="animate-ping absolute inline-flex h-3/4 w-3/4 rounded-full bg-red-700 opacity-75"></span>
           <Share size={36} color="#fff" weight="bold" />
         </div>
       )}
