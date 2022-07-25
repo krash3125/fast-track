@@ -51,7 +51,7 @@ const Inputs = ({ setFastestPath }) => {
           resolve(
             axios
               .get(
-                `https://api.tomtom.com/search/2/geocode/${addresses[i].replace(
+                `https://api.tomtom.com/search/2/search/${addresses[i].replace(
                   ' ',
                   '+'
                 )}.json?key=${import.meta.env.VITE_TOMTOM_API}&limit=1`
