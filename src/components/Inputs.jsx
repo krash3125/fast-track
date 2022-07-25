@@ -13,6 +13,7 @@ import a from 'axios';
 const axios = a.default;
 
 import getDistance from 'geolib/es/getDistance';
+import countapi from 'countapi-js';
 
 const Inputs = ({ setFastestPath }) => {
   const [startInput, setStartInput] = useState('');
@@ -24,6 +25,10 @@ const Inputs = ({ setFastestPath }) => {
   const [startLatLong, setStartLatLong] = useState({});
   const [endLatLong, setEndLatLong] = useState({});
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    countapi.visits('global');
+  }, []);
 
   const handleChange = (i, e) => {
     let newStopInputs = [...stopsInput];

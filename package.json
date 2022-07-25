@@ -13,6 +13,7 @@
     "@mantine/hooks": "^4.2.12",
     "@mantine/notifications": "^4.2.12",
     "axios": "^0.27.2",
+    "countapi-js": "^1.0.2",
     "dotenv": "^16.0.1",
     "geolib": "^3.3.3",
     "leaflet": "^1.8.0",

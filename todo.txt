@@ -1,7 +1,7 @@
 TODO
 -USE ALGORITHM isnt of brute force 
--bug with pointer location for schools and other non address locations
- -> messes up the google maps link export
 -map center on call - https://stackoverflow.com/questions/42647735/leaflet-map-container-not-found
+-bug with pointer location for schools and other non address locations (DONE)
+ -> messes up the google maps link export (DONE)
 -auto complete input (DONE)
 -rate limit api - 5 calls per second (DONE)
