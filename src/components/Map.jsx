@@ -60,7 +60,7 @@ const Map = ({ fastestPath }) => {
                 <Circle
                   center={[marker.position.lat, marker.position.lon]}
                   pathOptions={fillGreenOptions}
-                  radius={100}
+                  radius={120}
                 />
               ) : (
                 <></>
