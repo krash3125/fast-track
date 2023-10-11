@@ -24,7 +24,7 @@ We are proud that we were able to create a working application in such a short t
 3) Learned how to customize the Vite bundler
 
 ## What's next for Fast Track
-The next steps for Fast Track would be to get a license for this application and outsource it to more users to get more traffic.
+The next steps for Fast Track would be to get a license for this application and outsource it to more users to get more traffic..
 
 ## Link
 [Live Hosting of Fast Track](https://fast-track-ten.vercel.app/)
