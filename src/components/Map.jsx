@@ -32,7 +32,9 @@ const Map = ({ fastestPath }) => {
           onClick={() => {
             let link = 'https://www.google.com/maps/dir/';
             fastestPath.forEach((stop, i) => {
-              link += stop.address.freeformAddress.replace(' ', '+') + '/';
+              // console.log(stop);
+              // link += stop.address.freeformAddress.replace(' ', '+') + '/';
+              link += stop.position.lat + ',' + stop.position.lon + '/';
             });
             window.open(link, '_blank');
           }}

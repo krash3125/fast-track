@@ -13,7 +13,6 @@ import a from 'axios';
 const axios = a.default;
 
 import getDistance from 'geolib/es/getDistance';
-import countapi from 'countapi-js';
 
 const Inputs = ({ setFastestPath }) => {
   const [startInput, setStartInput] = useState('');
@@ -25,10 +24,6 @@ const Inputs = ({ setFastestPath }) => {
   const [startLatLong, setStartLatLong] = useState({});
   const [endLatLong, setEndLatLong] = useState({});
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    countapi.hit('fasttrack.vercel.app', 'webvisits');
-  }, []);
 
   const handleChange = (i, e) => {
     let newStopInputs = [...stopsInput];
@@ -83,11 +78,6 @@ const Inputs = ({ setFastestPath }) => {
   };
 
   const loadStopsData = async () => {
-    countapi.update(
-      'fasttrack.vercel.app',
-      'addrprocessed',
-      2 + stopsInput.length
-    );
     setStopsLatLong([]);
     const latLongData = await addressToLatLong([
       startInput,
@@ -145,8 +135,48 @@ const Inputs = ({ setFastestPath }) => {
     newStopsLatLong.splice(newStopsLatLong.length - 1, newStopsLatLong.length);
     newStopsLatLong = newStopsLatLong[0];
 
-    permutator(newStopsLatLong);
+    // const data = [allStopsData[0][0], ...allStopsData[1], allStopsData[2][0]];
 
+    // let graph = [];
+
+    // console.log(data[2]);
+    // console.log(
+    //   getDistance(
+    //     {
+    //       latitude: data[0].position.lat,
+    //       longitude: data[0].position.lon,
+    //     },
+    //     {
+    //       latitude: data[2].position.lat,
+    //       longitude: data[2].position.lon,
+    //     }
+    //   )
+    // );
+    // for (let i = 0; i < data.length; i++) {
+    //   let line = [];
+    //   for (let j = 0; j < data.length; j++) {
+    //     if (j > i) {
+    //       line[j] = getDistance(
+    //         {
+    //           latitude: data[i].position.lat,
+    //           longitude: data[i].position.lon,
+    //         },
+    //         {
+    //           latitude: data[j].position.lat,
+    //           longitude: data[j].position.lon,
+    //         }
+    //       );
+    //     } else if (j === i) {
+    //       line[j] = 0;
+    //     } else {
+    //       line[j] = graph[j][i];
+    //     }
+    //   }
+    //   console.log(line);
+    //   graph.push(line);
+    // }
+
+    // return setLoading(false);
     const perms = permutator(newStopsLatLong);
     let distancesArr = [];
 
@@ -218,6 +248,7 @@ const Inputs = ({ setFastestPath }) => {
   return (
     <div className="h-full w-1/3 flex flex-col gap-2 border border-solid border-ft-grey bg-[#F8F9FA] p-2 overflow-y-auto">
       <Title order={4}>Starting Location</Title>
+
       <Autocomplete
         placeholder="Starting Location"
         value={startInput}
@@ -331,7 +362,7 @@ const Inputs = ({ setFastestPath }) => {
             } else {
               setLoading(true);
               calcFastestPath();
-              countapi.hit('fasttrack.vercel.app', 'routescalc');
+              // countapi.hit('fasttrack.vercel.app', 'routescalc');
             }
           }}
         >
